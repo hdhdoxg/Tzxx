@@ -1,0 +1,131 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+-- แจ้งเตือนเมื่อสคริปต์ถูกโหลด
+Fluent:Notify({
+    Title = "กูมาแล้ววว",
+    Content = "!!!!!!!!",
+    Duration = 5
+})
+
+Fluent:Notify({
+    Title = "ควยยย",
+    Content = "!!!!!!!!",
+    Duration = 4
+})
+
+-- แสดง ASCII Art ใน Output หรือ Develop Command
+print([[ 
+┏━━┓╋╋╋╋╋╋╋╋╋┓╋╋┏┓╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋ 
+┃┏┓┃╋╋╋╋╋╋╋╋╋┗┓┏┛┃╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋
+┃┗┛┗┓┓╋┏┓╋╋╋╋┓┗┛┏┛━━┓┓┏┓━┓╋━━┓━━┓━━┓
+┃┏━┓┃┃╋┃┃╋╋╋╋┗┓┏┛╋┏┓┃┃┃┃┏┓┓┏┓┃┏┓┃┏┓┃
+┃┗━┛┃┗━┛┃╋╋╋┓╋┃┃╋╋┗┛┃┗┛┃┃┃┃┗┛┃┗┛┃┗┛┃
+┗━━━┛━┓┏┛╋╋╋┛╋┗┛╋╋━━┛━━┛┛┗┛━┓┃━┓┃━┓┃
+╋╋╋╋╋━┛┃╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋━┛┃━┛┃━┛┃
+╋╋╋╋╋━━┛╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋━━┛━━┛━━┛
+]])
+
+-- แสดงข้อความเริ่มต้น
+print("Loading UI...")
+
+local progress = 0
+
+-- ทำการแสดงผลแบบอนิเมชั่น
+for i = 1, 100 do
+    -- เพิ่ม progress ทีละ 1
+    progress = i
+
+    -- สร้างข้อความ progress bar โดยใช้ ░, ▒, ▓
+    local progressBar = ""
+    if progress <= 33 then
+        progressBar = string.rep("░", math.floor(progress / 3))
+    elseif progress <= 66 then
+        progressBar = string.rep("▒", math.floor(progress / 3))
+    else
+        progressBar = string.rep("▓", math.floor(progress / 3))
+    end
+
+    -- เขียนข้อความใหม่ในบรรทัดเดียว
+    print(string.format("\r[%s] %d%%", progressBar, progress))
+
+    -- รอเพื่อแสดงการอัพเดต
+    task.wait(0.05)
+end
+
+-- หลังจาก progress bar แสดงเสร็จแล้ว
+print("\nUI loaded!")
+
+-- สร้าง UI หลังจากโหลดเสร็จ
+local Window = Fluent:CreateWindow({
+    Title = "UI",
+    SubTitle = "[❤️]",
+	SubTitle = "by.Youngggg",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "home" }), -- เพิ่มไอคอนโฮม
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+-- ปรับแต่ง UI
+Tabs.Main:AddParagraph({
+    Title = "มาแล้ว!",
+    Content = "By.Younggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg 🔥🔥🔥"
+})
+
+-- สร้างปุ่ม "fùck R6"
+Tabs.Main:AddButton({
+    Title = "fùck R6",
+    Description = "Click to execute the R6 script",
+    Callback = function()
+        -- รันสคริปต์ R6
+        loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
+    end
+})
+
+-- สร้างปุ่ม "fùck R15"
+Tabs.Main:AddButton({
+    Title = "fùck R15",
+    Description = "Click to execute the R15 script",
+    Callback = function()
+        -- รันสคริปต์ R15
+        loadstring(game:HttpGet("https://pastefy.app/YZoglOyJ/raw"))()
+    end
+})
+
+-- Additional Managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Build Config and Interface Sections
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+Fluent:Notify({
+    Title = "Fluent",
+    Content = "The script has been loaded.",
+    Duration = 8
+})
+
+SaveManager:LoadAutoloadConfig()
+
+-- ฟังก์ชัน Unload สคริปต์
+Fluent.OnUnload = function()
+    print("Script has been unloaded. Thank you for using Fluent!")
+    Fluent:Notify({
+        Title = "Script Unloaded",
+        Content = "Goodbye! See you next time!",
+        Duration = 5
+    })
+end
